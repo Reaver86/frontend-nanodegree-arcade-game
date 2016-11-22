@@ -60,6 +60,9 @@ var Player = function () {
 	this.x = this.colNumbers[this.col - 1];
 	this.y = this.rowNumbers[this.row - 1];
 	this.sprite = 'images/char-boy.png';
+
+	// number of lives before game over
+	this.lives = 3;
 };
 
 // translate discrete row and col values set in handleInput function

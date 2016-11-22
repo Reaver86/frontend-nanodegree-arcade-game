@@ -106,7 +106,15 @@ var Engine = (function (global) {
 			if (enemy.x < player.x + 80 &&
 				enemy.x + 80 > player.x &&
 				player.row === enemy.row) {
-				player.setToStart();
+
+				// Reduce life and set player to starting position when hit by a bug
+				// reset lives to 4, because if statement gets called once again after that
+				if (player.lives > 0) {
+					player.lives--;
+					player.setToStart();
+				} else {
+					player.lives = 4;
+				}
 			}
 		});
 	}
@@ -114,6 +122,7 @@ var Engine = (function (global) {
 	// Check if player reached the last line and resets player
 	function checkWinCondition() {
 		if (player.row === 6) {
+			player.lives = 3;
 			player.setToStart();
 		}
 	}
@@ -157,6 +166,12 @@ var Engine = (function (global) {
 			}
 		}
 
+		// Draw heart and number of lives to the top left of the board
+		ctx.drawImage(Resources.get('images/Heart.png'), 15, 50, 40, 40);
+		ctx.font = '16pt Impact';
+		ctx.fillStyle = 'black';
+		ctx.fillText('' + player.lives, 60, 80);
+
 		renderEntities();
 	}
 
@@ -180,7 +195,6 @@ var Engine = (function (global) {
 	 * those sorts of things. It's only called once by the init() method.
 	 */
 	function reset() {
-		// idea: starting screen with button that needs to be clicked for game to start
 	}
 
 	/* Go ahead and load all of the images we know we're going to need to
@@ -192,7 +206,8 @@ var Engine = (function (global) {
 		'images/water-block.png',
 		'images/grass-block.png',
 		'images/enemy-bug.png',
-		'images/char-boy.png'
+		'images/char-boy.png',
+		'images/Heart.png'
 	]);
 	Resources.onReady(init);
 
