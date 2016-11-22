@@ -1,7 +1,3 @@
-// Helper function that randomly returns a number between 1 and max
-var rdmNumber = function (max) {
-	return Math.floor(Math.random() * max) + 1;
-};
 
 // Enemies our player must avoid
 var Enemy = function (speed, row) {
@@ -35,12 +31,12 @@ Enemy.prototype.update = function (dt) {
 	// it gets reset to the left, reassigned a new row and a new speed
 	if (this.x > 600) {
 		this.x = -100;
-		var newRow = rdmNumber(3);
+		var newRow = Math.floor(Math.random() * 3) + 1;
 		this.y = this.rowNumbers[newRow - 1];
 		// add 2 to enemy row to be comparable to players row
 		this.row = newRow + 2;
 
-		this.speed = rdmNumber(5);
+		this.speed = Math.floor(Math.random() * 5) + 1;
 	}
 };
 
@@ -118,7 +114,9 @@ Player.prototype.colNumbers = [0, 101, 202, 303, 404];
 var numOfEnemies = 5;
 var allEnemies = [];
 for (var i = 0; i < numOfEnemies; i++) {
-	allEnemies.push(new Enemy(rdmNumber(5), rdmNumber(3)));
+	var oneToThree = Math.floor(Math.random() * 3) + 1;
+	var oneToFive = Math.floor(Math.random() * 5) + 1;
+	allEnemies.push(new Enemy(oneToFive, oneToThree));
 }
 
 var player = new Player();
